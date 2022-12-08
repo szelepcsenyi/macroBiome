@@ -1,0 +1,16 @@
+Variable;Timescale;Name;Unit
+H_0_J.m2.dy1;daily;daily solar irradiation;J m-2
+H_np_J.m2.dy1;daily;daily positive (daytime) net surface radiation;J m-2
+H_nn_J.m2.dy1;daily;daily negative (nighttime) net surface radiation;J m-2
+PPFD_mol.m2.dy1;daily;daily photosynthetically active radiation;mol m-2
+CN_mm.dy1;daily;daily condensation;mm
+SM_mm.dy1;daily;daily soil moisture content;mm
+RO_mm.dy1;daily;daily runoff;mm
+EET_mm.dy1;daily;daily equilibrium evapotranspiration;mm
+PET_mm.dy1;daily;daily potential evapotranspiration;mm
+AET_mm.dy1;daily;daily actual evapotranspiration;mm
+EET_mo_mm.mo1;monthly;monthly equilibrium evapotranspiration;mm
+PET_mo_mm.mo1;monthly;monthly potential evapotranspiration;mm
+AET_mo_mm.mo1;monthly;monthly actual evapotranspiration;mm
+PTC_mo;monthly;monthly Priestley–Taylor coefficient;unitless
+CWD_mo_mm.mo1;monthly;monthly climatic water deficit;mm

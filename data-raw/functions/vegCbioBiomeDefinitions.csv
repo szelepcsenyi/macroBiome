@@ -1,0 +1,18 @@
+ID;Vegetation class;Numeric code;tr.e.t;tr.r.t;w-te.e.t;te.s.t;c-te.c.t;bo.e.t;bo.s.t;sb.suc;wa.g.s;cl.g.s;cd.g.s;h.d.s;c.d.s;p.d
+TRRA;Tropical rain forest;1;1;0;0;0;0;0;0;0;0;0;0;0;0;0
+TRSE;Tropical seasonal forest;2;1;1;0;0;0;0;0;0;0;0;0;0;0;0
+TRDR;Tropical dry forest/savanna;3;0;1;0;0;0;0;0;0;0;0;0;0;0;0
+WAMX;Broad-leaved evergreen/warm mixed forest;4;0;0;1;0;0;0;0;0;0;0;0;0;0;0
+TEDE;Temperate deciduous forest;5;0;0;0;1;1;0;1;0;0;0;0;0;0;0
+COMX;Cool mixed forest;6;0;0;0;1;1;1;1;0;0;0;0;0;0;0
+COCO;Cool conifer forest;7;0;0;0;0;1;1;1;0;0;0;0;0;0;0
+TAIG;Taiga;8;0;0;0;0;0;1;1;0;0;0;0;0;0;0
+CLMX;Cold mixed forest;9;0;0;0;0;1;0;1;0;0;0;0;0;0;0
+CLDE;Cold deciduous forest;10;0;0;0;0;0;0;1;0;0;0;0;0;0;0
+XERO;Xerophytic woods/scrub;11;0;0;0;0;0;0;0;1;0;0;0;0;0;0
+WAST;Warm grass/shrub;12;0;0;0;0;0;0;0;0;1;0;0;0;0;0
+COST;Cool grass/shrub;13;0;0;0;0;0;0;0;0;0;1;1;0;0;0
+TUND;Tundra;14;0;0;0;0;0;0;0;0;0;0;1;0;0;0
+HODE;Hot desert;15;0;0;0;0;0;0;0;0;0;0;0;1;0;0
+SEDE;Semi-desert;16;0;0;0;0;0;0;0;0;0;0;0;0;1;0
+PODE;Polar desert;17;0;0;0;0;0;0;0;0;0;0;0;0;0;1

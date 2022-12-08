@@ -1,0 +1,15 @@
+ID;Plant functional type;Dominance;tc_lwr;tc_upr;gdd0_lwr;gdd0_upr;gdd5_lwr;gdd5_upr;tw_lwr;tw_upr;ptc_lwr;ptc_upr
+tr.e.t;Tropical evergreen tree;1;15.5;Inf;0;Inf;0;Inf;-273.15;Inf;0.8;Inf
+tr.r.t;Tropical raingreen tree;1;15.5;Inf;0;Inf;0;Inf;-273.15;Inf;0.45;0.95
+w-te.e.t;Warm temperate evergreen tree;2;5;Inf;0;Inf;0;Inf;-273.15;Inf;0.65;Inf
+te.s.t;Temperate summergreen tree;3;-15;15.5;0;Inf;1200;Inf;-273.15;Inf;0.65;Inf
+c-te.c.t;Cool temperate conifer tree;3;-19;5;0;Inf;900;Inf;-273.15;Inf;0.65;Inf
+bo.e.t;Boreal evergreen conifer tree;3;-35;-2;0;Inf;350;Inf;-273.15;Inf;0.75;Inf
+bo.s.t;Boreal summergreen tree;3;-273.15;5;0;Inf;350;Inf;-273.15;Inf;0.65;Inf
+sb.suc;Sclerophyll|succulent;4;5;Inf;0;Inf;0;Inf;-273.15;Inf;0.28;Inf
+wa.g.s;Warm grass|shrub;5;-273.15;Inf;0;Inf;0;Inf;22;Inf;0.18;Inf
+cl.g.s;Cool grass|shrub;6;-273.15;Inf;0;Inf;500;Inf;-273.15;Inf;0.33;Inf
+cd.g.s;Cold grass|shrub;6;-273.15;Inf;100;Inf;0;Inf;-273.15;Inf;0.33;Inf
+h.d.s;Hot desert shrub;7;-273.15;Inf;0;Inf;0;Inf;22;Inf;0;Inf
+c.d.s;Cold desert shrub;8;-273.15;Inf;100;Inf;0;Inf;-273.15;Inf;0;Inf
+p.d;Polar desert;9;-273.15;Inf;0;Inf;0;Inf;-273.15;Inf;0;Inf

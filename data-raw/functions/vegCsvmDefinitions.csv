@@ -1,0 +1,25 @@
+ID;Vegetation class;Biome type;gdd5_lwr;gdd5_upr;bdi_lwr;bdi_upr;cci_lwr;cci_upr
+Tund;Tundra;Tundra;0;300;0;3.3;-14;Inf
+DrkNdFrstTund;Dark-needled Forest-Tundra;Forest-Tundra;300;500;0;2;-14;60
+LgtNdFrstTund;Light-needled Forest-Tundra;Forest-Tundra;300;500;0;2;60;85
+LrFrstTund;Larch Forest-Tundra;Forest-Tundra;300;500;0;2;85;Inf
+DrkNdNTaig;Dark-needled Northern Taiga;Taiga;500;800;0;2;-14;60
+LgtNdNTaig;Light-needled Northern Taiga;Taiga;500;800;0;2;60;85
+LrNTaig;Larch Northern Taiga;Taiga;500;800;0;2;85;Inf
+DrkNdMTaig;Dark-needled Middle Taiga;Taiga;800;1000;0;2;-14;60
+LgtNdMTaig;Light-needled Middle Taiga;Taiga;800;1000;0;2;60;85
+LrMTaig;Larch Middle Taiga;Taiga;800;1000;0;2;85;Inf
+DrkNdSTaig;Dark-needled Southern Taiga;Taiga;1000;1150;0;1.5;-14;60
+LgtNdSTaig;Light-needled Southern Taiga;Taiga;1000;1150;0;1.5;60;Inf
+BiSubTaig;Birch Subtaiga;Subtaiga;1150;1650;0;1.5;-14;60
+LgtNdSubTaig;Light-needled Subtaiga;Subtaiga;1150;1650;0;1.5;60;Inf
+BiFrstStep;Birch Forest-Steppe;Forest-Steppe;1000;1650;1.5;2;-14;60
+LgtNdFrstStep;Light-needled Forest-Steppe;Forest-Steppe;1000;1650;1.5;2;60;80
+LrFrstStep;Larch Forest-Steppe;Forest-Steppe;1000;1650;1.5;2;80;Inf
+StepW;Steppe;Steppe;500;1650;2;3.3;-14;60
+StepC;Steppe;Steppe;500;1650;2;3.3;60;80
+StepE;Steppe;Steppe;500;1650;2;3.3;80;Inf
+TempFrstStep;Temperate Forest-Steppe;Forest-Steppe;1650;Inf;0;1.5;-14;Inf
+TempStep;Temperate Steppe;Steppe;1650;Inf;1.5;3.3;-14;Inf
+TundStep;Tundra-Steppe;Tundra-Steppe;300;500;2;3.3;-14;Inf
+SDst;Semidesert/Desert;Semidesert/Desert;-Inf;Inf;3.3;Inf;-14;Inf

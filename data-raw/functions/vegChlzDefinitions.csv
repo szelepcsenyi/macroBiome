@@ -1,0 +1,50 @@
+ID;Vegetation class;Numeric code;Type;abt;tap;per;Forest-steppe
+SpDt;Subpolar dry tundra;2;core;1.5;62.5;1;FALSE
+SpMt;Subpolar moist tundra;3;core;1.5;125;0.5;FALSE
+SpWt;Subpolar wet tundra;4;core;1.5;250;0.25;FALSE
+SpRt;Subpolar rain tundra;5;core;1.5;500;0.125;FALSE
+BD;Boreal desert;6;core;3;62.5;2;FALSE
+BDs;Boreal dry scrub;7;core;3;125;1;TRUE
+BMf;Boreal moist forest;8;core;3;250;0.5;TRUE
+BWf;Boreal wet forest;9;core;3;500;0.25;FALSE
+BRf;Boreal rain forest;10;core;3;1000;0.125;FALSE
+CtD;Cool temperate desert;11;core;6;62.5;4;FALSE
+CtDs;Cool temperate desert scrub;12;core;6;125;2;TRUE
+CtS;Cool temperate steppe;13;core;6;250;1;TRUE
+CtMf;Cool temperate moist forest;14;core;6;500;0.5;TRUE
+CtWf;Cool temperate wet forest;15;core;6;1000;0.25;FALSE
+CtRf;Cool temperate rain forest;16;core;6;2000;0.125;FALSE
+WtD;Warm temperate desert;17;core;12;62.5;8;FALSE
+WtDs;Warm temperate desert scrub;18;core;12;125;4;FALSE
+WtTs;Warm temperate thorn steppe;19;core;12;250;2;TRUE
+WtDf;Warm temperate dry forest;20;core;12;500;1;TRUE
+WtMf;Warm temperate moist forest;21;core;12;1000;0.5;FALSE
+WtWf;Warm temperate wet forest;22;core;12;2000;0.25;FALSE
+WtRf;Warm temperate rain forest;23;core;12;4000;0.125;FALSE
+StD;Subtropical desert;24;core;12;62.5;8;FALSE
+StDs;Subtropical desert scrub;25;core;12;125;4;FALSE
+StTw;Subtropical thorn woodland;26;core;12;250;2;FALSE
+StDf;Subtropical dry forest;27;core;12;500;1;FALSE
+StMf;Subtropical moist forest;28;core;12;1000;0.5;FALSE
+StWf;Subtropical wet forest;29;core;12;2000;0.25;FALSE
+StRf;Subtropical rain forest;30;core;12;4000;0.125;FALSE
+TD;Tropical desert;31;core;24;62.5;16;FALSE
+TDs;Tropical desert scrub;32;core;24;125;8;FALSE
+TTw;Tropical thorn woodland;33;core;24;250;4;FALSE
+TVdf;Tropical very dry forest;34;core;24;500;2;FALSE
+TDf;Tropical dry forest;35;core;24;1000;1;FALSE
+TMf;Tropical moist forest;36;core;24;2000;0.5;FALSE
+TWf;Tropical wet forest;37;core;24;4000;0.25;FALSE
+TRf;Tropical rain forest;38;core;24;8000;0.125;FALSE
+BHDsMf;Boreal humid dry scrub - moist forest;108;tran_m;3;125;0.5;TRUE
+BSaDDs;Boreal semiarid desert - dry scrub;111;tran_p;3;125;2;TRUE
+BShFs;Boreal subhumid forest-steppe;112;tran_p;3;250;1;TRUE
+BHMwf;Boreal humid moist-wet forest;113;tran_p;3;500;0.5;TRUE
+CtShDsS;Cool temperate subhumid desert scrub - steppe;116;tran_m;6;125;1;TRUE
+CtHFs;Cool temperate humid forest-steppe;117;tran_m;6;250;0.5;TRUE
+CtSaDsS;Cool temperate semiarid desert scrub - steppe;121;tran_p;6;250;2;TRUE
+CtShFs;Cool temperate subhumid forest-steppe;122;tran_p;6;500;1;TRUE
+WtSaDsTs;Warm temperate semiarid desert scrub - thorn steppe;126;tran_m;12;125;2;TRUE
+WtShFs;Warm temperate subhumid forest-steppe;127;tran_m;12;250;1;TRUE
+WtHDmf;Warm temperate humid dry-moist forest;128;tran_m;12;500;0.5;TRUE
+StSaTwDf;Subtropical semiarid thorn woodland - dry forest;133;tran_p;12;500;2;TRUE

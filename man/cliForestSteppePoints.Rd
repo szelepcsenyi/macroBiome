@@ -99,10 +99,10 @@ Here, three forest-steppe models with different theoretical backgrounds are impl
     The forestry climate classification developed by Führer et al. (2011) was reworked by Mátyás et al. (2018). In
     the context of assessing the effects of future climate change, the 'forest-steppe' climate class was
     introduced in the model. In the work of Mátyás et al. (2018), this type is characterized by the Forestry
-    Aridity Index (\code{'fai'}, dimensionless) values between 7.25 and 8. This definition is used here. \cr
+    Aridity Index (\code{fai}, dimensionless) values between 7.25 and 8. This definition is used here. \cr
     The Siberian Vegetation Model (Monserud et al. 1993) defines numerous types of forest-steppe on the basis of
-    values of the Growing Degree-Days above 5°C (\code{'gdd5'}, in °C day), the Budyko's Dryness Index
-    (\code{'bdi'}, dimensionless), and the Condrad's Continentality Index (\code{'cci'}, in per cent). Here, all
+    values of the Growing Degree-Days above 5°C (\code{gdd5}, in °C day), the Budyko's Dryness Index
+    (\code{bdi}, dimensionless), and the Condrad's Continentality Index (\code{cci}, in per cent). Here, all
     such ecotone types are aggregated into one class, in order to estimate the presence/absence of the
     ‘forest-steppe’ ecotone.
 }

@@ -37,7 +37,7 @@ for (i_lm in 1 : length(synAbtLim)) {
   for (i_sd in 1 : 2) {
     intDf <-
       rbind(intDf,
-            cbind(ID = "BaSl", Vegetation.class = "Bare soil and no vegetation", Numeric.code = 0,
+            cbind(ID = "BaSl", Vegetation.class = "Bare soil and no vegetation", Numeric.code = 39,
                   Type = "syn", abt = synAbtLim[i_lm],
                   tap = get(c("min", "max")[i_sd])(hlzDefSubset$tap[hlzDefSubset$abt == synAbtLim[i_lm]]) *
                     c(0.5, 2.)[i_sd],
@@ -72,15 +72,22 @@ svmDefinitions <- read.csv2("data-raw/functions/vegCsvmDefinitions.csv", header 
 bciRequirements <- read.csv2("data-raw/functions/bciRequirements.csv", header = TRUE, row.names = 1,
                              sep = ";", quote = "\"", dec = ".", fill = TRUE, comment.char = "")
 
+# An auxiliary dataframe decoding outputs of the Köppen-Geiger classification scheme
+vegCkgcTypes <- read.csv2("data-raw/functions/vegCkgcTypes.csv", header = TRUE,
+                          sep = ";", quote = "\"", dec = ".", fill = TRUE, comment.char = "")
+
 # Auxiliary dataframe for decoding outputs of vegetation classifiers
-vegClsNumCodes <- data.frame(matrix(nrow = 39, ncol = 4,
-                                    dimnames = list(NULL, c("Name.HLZ", "Code.HLZ", "Name.BIOME", "Code.BIOME"))))
+vegClsNumCodes <- data.frame(matrix(nrow = 39, ncol = 6,
+                                    dimnames = list(NULL, c("Name.HLZ", "Code.HLZ", "Name.KGC", "Code.KGC",
+                                                            "Name.BIOME", "Code.BIOME"))))
 vegClsNumCodes[1, "Name.HLZ"] <- "Polar desert"
 vegClsNumCodes[hlzDefSubset$Numeric.code[1:37], "Name.HLZ"] <- hlzDefSubset$Vegetation.class[1:37]
 vegClsNumCodes[39, "Name.HLZ"] <- "Bare soil and no vegetation"
 vegClsNumCodes[1, "Code.HLZ"] <- "PD"
 vegClsNumCodes[hlzDefSubset$Numeric.code[1:37], "Code.HLZ"] <- rownames(hlzDefSubset)[1:37]
 vegClsNumCodes[39, "Code.HLZ"] <- "BaSl"
+vegClsNumCodes[1:30, "Name.KGC"] <- vegCkgcTypes$NAME.KGC
+vegClsNumCodes[1:30, "Code.KGC"] <- vegCkgcTypes$CODE.KGC
 vegClsNumCodes[bioBiomeDefinitions$Numeric.code, "Name.BIOME"] <- bioBiomeDefinitions$Vegetation.class
 vegClsNumCodes[bioBiomeDefinitions$Numeric.code, "Code.BIOME"] <- rownames(bioBiomeDefinitions)
 
@@ -97,7 +104,7 @@ scale <- 10
 type <- "geography_regions_polys"
 category <- "physical"
 file_name <-  paste0('ne_', scale, 'm_', type)
-address <- paste0("http://www.naturalearthdata.com/http//",
+address <- paste0("https://www.naturalearthdata.com/http//",
                   "www.naturalearthdata.com/download/", scale, "m/", category,"/", file_name, ".zip")
 utils::download.file(file.path(address), zip_file <- tempfile())
 utils::unzip(zip_file, exdir =  tempdir())
@@ -147,8 +154,8 @@ inp_exClnrGrid <- lapply(inp_exClnrGrid, raster::rasterFromXYZ, crs = "+proj=lon
 ## Save the data in the required R package location
 
 usethis::use_data(pi.ber90, varFeatures, c, opVarChoices, ipVarRequirements, hlzDefSubset, bioPFTDefinitions,
-                  bioBiomeDefinitions, fspChlzDefSubset, thrSft, svmDefinitions, bciRequirements, islandsSP,
-                  internal = TRUE, overwrite = TRUE)
+                  bioBiomeDefinitions, fspChlzDefSubset, thrSft, svmDefinitions, bciRequirements, vegCkgcTypes,
+                  islandsSP, internal = TRUE, overwrite = TRUE)
 
 usethis::use_data(inp_exPoints, overwrite = T)
 

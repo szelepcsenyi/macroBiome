@@ -86,9 +86,18 @@ to be computed. Valid values are as follows: \cr
 (f) \code{'gdd5'} - Growing Degree-Days on 5°C base (in °C day);  \cr
 (g) \code{'bdi'} - Budyko's Dryness Index (dimensionless); \cr
 (h) \code{'cci'} - Condrad's Continentality Index (in per cent);  \cr
-(i) \code{'tc'} - Mean Temperature of the Coldest Month (in °C); \cr
-(j) \code{'tw'} - Mean Temperature of the Warmest Month (in °C);  \cr
-(k) \code{'ptc'} - Priestley–Taylor Coefficient (dimensionless).}
+(i) \code{'mat'} - Mean Annual Temperature (in °C); \cr
+(j) \code{'tc'} - Mean Temperature of the Coldest Month (in °C); \cr
+(k) \code{'tw'} - Mean Temperature of the Warmest Month (in °C);  \cr
+(l) \code{'tm10'} - Number of Months with Mean Temperature above 10°C (dimensionless);  \cr
+(m) \code{'pdry'} - Precipitation Sum of the Driest Month (in mm); \cr
+(n) \code{'psdry'} - Precipitation Sum of the Driest Month in the Summer Half-Year (in mm); \cr
+(o) \code{'pwdry'} - Precipitation Sum of the Driest Month in the Winter Half-Year (in mm); \cr
+(p) \code{'pswet'} - Precipitation Sum of the Wettest Month in the Summer Half-Year (in mm); \cr
+(q) \code{'pwwet'} - Precipitation Sum of the Wettest Month in the Winter Half-Year (in mm); \cr
+(r) \code{'ps'} - Precipitation Sum of the Summer Half-Year (in mm); \cr
+(s) \code{'pw'} - Precipitation Sum of the Winter Half-Year (in mm); \cr
+(t) \code{'ptc'} - Priestley–Taylor Coefficient (dimensionless).}
 
 \item{argCkd}{'logical' scalar that indicates whether or not the checking and correction of arguments can be
 omitted.}
@@ -106,27 +115,44 @@ Taking into account all implemented bioclimatic indices, the following five requ
 
     \itemize{
       \item{\code{abt}: Mean Annual Biotemperature (Eq 1 in Szelepcsényi et al. (2014); in °C)}
+      \item{\code{mat}: Mean Annual Temperature (in °C)}
       \item{\code{tc}: Mean Temperature of the Coldest Month (in °C)}
       \item{\code{tw}: Mean Temperature of the Warmest Month (in °C)}
+      \item{\code{tm10}: Number of Months with Mean Temperature above 10°C (dimensionless)}
       \item{\code{gdd5}: Growing Degree-Days on 5°C base (in °C day)}
       \item{\code{gdd0}: Growing Degree-Days on 0°C base (in °C day)}
     }
 
-    Monthly data are sufficient to calculate values of the mean temperatures of the coldest and warmest months and
-    the mean annual biotemperature, while daily values are needed to compute values of the growing degree-days. If
-    only a set of these bioclimatic indices has to be calculated, the setting \code{prec = NULL} must be used. \cr
-    An important bioclimatic index for the Holdridge life zone system is the total annual precipitation, for the
-    calculation of which requires only monthly precipitation data. If only this bioclimatic index has to be
-    computed, the setting \code{temp = NULL} must be used. \cr
+    Monthly data are sufficient to calculate values of the mean temperatures of the coldest and warmest months,
+    the mean annual temperature/biotemperature and the number of months with temperature > 10°C, while daily
+    values are needed to compute values of the growing degree-days. If only a set of these bioclimatic indices has
+    to be calculated, the setting \code{prec = NULL} must be used. \cr
+    An important bioclimatic index for both the Holdridge life zone system and Köppen-Geiger climate
+    classification system is the total annual precipitation, for the calculation of which requires only monthly
+    precipitation data. If only this bioclimatic index has to be computed, the setting \code{temp = NULL} must be
+    used. The same setting has to be used for calculation of the precipitation sum of the driest month. \cr
     In addition to monthly temperature data, latitude coordinates are also required to calculate the Condrad's
-    Continentality Index (\code{'cci'}: Eq 4 in Conrad (1946); in per cent). \cr
+    Continentality Index (\code{cci}: Eq 4 in Conrad (1946); in per cent). \cr
     For calculating values of the Potential Evapotranspiration Ratio used in the Holdridge life zone system
-    (\code{'per'}: Eq 4 in Szelepcsényi et al. (2014); dimensionless) and the Forestry Aridity Index introduced by
-    the forestry climate classification (\code{'fai'}: Eq 1 in Führer et al. (2011); dimensionless), both
-    temperature and precipitation data at a monthly timescale are also required. \cr
-    The computation of the Budyko's Dryness Index (\code{'bdi'}, dimensionless) and the Priestley–Taylor
-    Coefficient (\code{'ptc'}, dimensionless) requires a simulation of evapotranspiration at daily time step via
-    the implementation of the SPLASH algorithm (Davis et al. 2017) (see
+    (\code{per}: Eq 4 in Szelepcsényi et al. (2014); dimensionless) and the Forestry Aridity Index introduced by
+    the forestry climate classification (\code{fai}: Eq 1 in Führer et al. (2011); dimensionless), both
+    temperature and precipitation data at a monthly timescale are also required. Same data are needed to calculate
+    most precipitation statistics used by the Köppen-Geiger climate classification system:
+
+    \itemize{
+      \item{\code{psdry}: Precipitation Sum of the Driest Month in the Summer Half-Year (in mm)}
+      \item{\code{pwdry}: Precipitation Sum of the Driest Month in the Winter Half-Year (in mm)}
+      \item{\code{pswet}: Precipitation Sum of the Wettest Month in the Summer Half-Year (in mm)}
+      \item{\code{pwwet}: Precipitation Sum of the Wettest Month in the Winter Half-Year (in mm)}
+      \item{\code{ps}: Precipitation Sum of the Summer Half-Year (in mm)}
+      \item{\code{pw}: Precipitation Sum of the Winter Half-Year (in mm)}
+    }
+
+    For these bioclimatic indices, summer (winter) half-year is defined as the warmer (cooler) six month period of
+    AMJJAS (from April to September) and ONDJFM (from October to March). \cr
+    The computation of the Budyko's Dryness Index (\code{bdi}, dimensionless) and the Priestley–Taylor Coefficient
+    (\code{ptc}, dimensionless) requires a simulation of evapotranspiration at daily time step via the
+    implementation of the SPLASH algorithm (Davis et al. 2017) (see
     \code{\link[macroBiome]{dlyEngWtrFluxPoints}}). In addition to one-year time series of daily temperature and
     precipitation data, the application of the SPLASH algorithm requires values of the relative sunshine duration
     at a daily timescale, latitude coordinate, altitude, year/epoch, and the so-called 'bucket size'. The Dryness

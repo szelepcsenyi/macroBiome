@@ -139,11 +139,13 @@ NULL
 #' @aliases vegClsNumCodes
 #' @docType data
 #'
-#' @description The key to the classes used by climate-based vegetation classifiers implemented here. Currently, two
+#' @description The key to the classes used by climate-based vegetation classifiers implemented here. Currently, three
 #'     bioclimatic vegetation classification approaches are implemented:
 #'     \itemize{
 #'       \item{\code{HLZ}: a version with no altitudinal belts of the Holdridge life zone (HLZ) system (Holdridge
 #'       1947, 1967), in accordance with works of Szelepcsényi et al. (2014, 2018)}
+#'       \item{\code{KGC}: the Köppen-Geiger classification (KGC) system (Köppen 1936) with some modifications
+#'       suggested by Peel et al. (2007)}
 #'       \item{\code{BIOME}: the initial version of the BIOME model developed by Prentice et al. (1992)}
 #'     }
 #'
@@ -160,6 +162,12 @@ NULL
 #'     105(2727):367–368. \doi{10.1126/science.105.2727.367}}
 #'
 #' \emph{Holdridge LR (1967) Life zone ecology. Tropical Science Center, San Jose, Costa Rica}
+#'
+#' \cite{Köppen W (1936) Das geographische System der Klimate. In: Köppen W, Geiger R (eds) Handbuch der
+#'     Klimatologie. Verlag von Gebrüder Borntraeger, Berlin, Germany, pp 1–44}
+#'
+#' \cite{Peel MC, Finlayson BL, McMahon TA (2007) Updated world map of the Köppen-Geiger climate classification.
+#'     Hydrol Earth Syst Sci 11(5):1633–1644. \doi{10.5194/hess-11-1633-2007}}
 #'
 #' \emph{Prentice IC, Cramer W, Harrison SP, Leemans R, Monserud RA, Solomon AM (1992) A global biome model based on
 #'     plant physiology and dominance, soil properties and climate. J Biogeogr 19(2):117–134. \doi{10.2307/2845499}}

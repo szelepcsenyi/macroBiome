@@ -72,7 +72,7 @@
 #' cbind(HLZ[,-c(4)], vegClsNumCodes[numCode, c("Name.HLZ", "Code.HLZ")])
 #' })
 #'
-#' @importFrom stats setNames
+#' @importFrom stats complete.cases setNames
 #'
 #' @export
 #'
@@ -95,33 +95,36 @@ cliHoldridgePoints <- function(temp, prec, verbose = FALSE) {
   # 01. Calculate values of each bioclimatic index required to classify vegetation
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   bioCliIdx <- cliBioCliIdxPoints(temp, prec, bciOpVar = cv.bci, argCkd = T)
-  list2env(setNames(split(bioCliIdx, col(bioCliIdx)), colnames(bioCliIdx)), envir = environment())
+  list2env(unclass(as.data.frame(bioCliIdx)), envir = environment())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # 02. Set the result object containing vegetation class
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  vegCls <- psblVegCls <- rep(NA_character_, length = lgth)
+  vegCls <- rep(NA_character_, length = lgth)
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # 03. Determine the vegetation class by using the Holdridge life zone system
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Set a board containing the distance from the optimal value for each pair of indices and classes
-  distBds <- array(NA, dim = c(nrow(hlzDefSubset), length(cv.bci), lgth),
-                   dimnames = list(hlzDefSubset$ID, cv.bci, NULL))
-  for (i_bci in 1 : length(cv.bci)) {
-    bciLbl <- cv.bci[i_bci]
-    bci <- get(bciLbl)
-    for (i_vcl in 1 : nrow(hlzDefSubset)) {
-      optVal <- log2(hlzDefSubset[[bciLbl]][i_vcl]) + 0.5
-      distBds[i_vcl, i_bci, ] <- ifelse(lapply(bci, function(x) {x == 0}), NA, (log2(bci) - optVal) ** 2.)
-    }
+  # Set a board containing the distance from the optimal value for each classes
+  distBds <- matrix(nrow = lgth, ncol = nrow(hlzDefSubset), dimnames = list(NULL, hlzDefSubset$ID))
+  for (i_vcl in 1 : nrow(hlzDefSubset)) {
+    optVabt <- log2(hlzDefSubset$abt[i_vcl]) + 0.5
+    tmpVabt <- ifelse(abt == 0., NA, (log2(abt) - optVabt) ** 2.)
+    optVtap <- log2(hlzDefSubset$tap[i_vcl]) + 0.5
+    tmpVtap <- ifelse(tap == 0., NA, (log2(tap) - optVtap) ** 2.)
+    optVper <- log2(hlzDefSubset$per[i_vcl]) + 0.5
+    tmpVper <- ifelse(per == 0., NA, (log2(per) - optVper) ** 2.)
+    distBds[, i_vcl] <- sqrt(tmpVabt + tmpVtap + tmpVper)
   }
-  vld <- as.logical(apply(matrix(mapply(function(x) { !is.na(x) },
-                                        data.frame(abt = get("abt"), tap = get("tap"), per = get("per"))),
-                                 nrow = lgth), 1, prod))
-  psblVegCls[vld] <- lapply(seq(1, lgth)[vld], function(i) {
-    which(sqrt(rowSums(distBds[, , i])) == min(sqrt(rowSums(distBds[, , i]))))
-  })
+
+  # Calculate minimum distances in a three-dimensional space of bioclimatic indices
+  minVal <- do.call(pmin, as.data.frame(distBds))
+
+  # Select all possible classes using minimum distances
+  psblVegCls <- t(sapply(1 : nrow(distBds), function(i) { distBds[i, ] == minVal[i] }))
+
+  # Number of possible classes
+  n_pvc <- rowSums(psblVegCls)
 
   # Set some magic numbers
   # Polar temperature line
@@ -143,70 +146,41 @@ cliHoldridgePoints <- function(temp, prec, verbose = FALSE) {
   names(StCls) <- c("StD", "StDs", "StTw", "StDf", "StMf", "StWf", "StRf")
 
   # Classify the vegetation type under certain boundary conditions
-  if (!identical(vld, integer(0))) {
+  gr        <- !is.na(n_pvc)
+  grI       <- gr & (tap < mn_tap | per < mn_per)
+  grII      <- gr & (tap >= mn_tap & per >= mn_per)
+  grIIA     <- grII & abt < plTL
+  grIIB     <- grII & abt >= plTL
+  grIIB1    <- grIIB & n_pvc == 1
+  grIIB2    <- grIIB & n_pvc != 1
+  grIIB2a   <- grIIB2 & apply(psblVegCls[, c(WtCls, StCls), drop = FALSE], 1, function(x) !any(x))
+  grIIB2b   <- grIIB2 & apply(psblVegCls[, c(WtCls, StCls), drop = FALSE], 1, any)
+  grIIB2bwt <- grIIB2b & abt < frTL
+  grIIB2bst <- grIIB2b & abt >= frTL
 
-    gr <- which(vld)
-    grI       <- gr[which(get("tap")[gr] < mn_tap | get("per")[gr] < mn_per)]
-    grII      <- gr[which(get("tap")[gr] >= mn_tap & get("per")[gr] >= mn_per)]
-    if (!identical(grII, integer(0))) {
-      grIIA     <- grII[which(get("abt")[grII] < plTL)]
-      grIIB     <- grII[which(get("abt")[grII] >= plTL)]
-    } else {
-      grIIA <- grIIB <- integer(0)
-    }
-    if (!identical(grIIB, integer(0))) {
-      grIIB1    <- grIIB[which(sapply(psblVegCls[grIIB], function(x) { length(x) == 1 }))]
-      grIIB2    <- grIIB[which(sapply(psblVegCls[grIIB], function(x) { length(x) > 1 }))]
-    } else {
-      grIIB1 <- grIIB2 <- integer(0)
-    }
-    if (!identical(grIIB2, integer(0))) {
-      grIIB2a   <- grIIB2[which(sapply(psblVegCls[grIIB2], function(x) { !any(is.element(x, c(WtCls, StCls))) }))]
-      grIIB2b   <- grIIB2[which(sapply(psblVegCls[grIIB2], function(x) { any(is.element(x, c(WtCls, StCls))) }))]
-    } else {
-      grIIB2a <- grIIB2b <- integer(0)
-    }
-    if (!identical(grIIB2b, integer(0))) {
-      grIIB2bwt <- grIIB2b[which(get("abt")[grIIB2b] < frTL)]
-      grIIB2bst <- grIIB2b[which(get("abt")[grIIB2b] >= frTL)]
-    } else {
-      grIIB2bwt <- grIIB2bst <- integer(0)
-    }
+  selVegCls <- function(x) { names(which(x))[1] }
 
-    # I. Bare soil and no vegetation
-    if (!identical(grI, integer(0))) {
-      vegCls[grI]       <- "BaSl"
-    }
-    # II.A Polar desert
-    if (!identical(grIIA, integer(0))) {
-      vegCls[grIIA]     <- "PD"
-    }
-    # II.B.1 One possible valid vegetation type
-    if (!identical(grIIB1, integer(0))) {
-      vegCls[grIIB1]    <- sapply(psblVegCls[grIIB1], names)
-    }
-    # II.B.2.a Two or more possible valid vegetation types (without warm temperate and subtropical regions)
-    if (!identical(grIIB2a, integer(0))) {
-      vegCls[grIIB2a]   <- sapply(psblVegCls[grIIB2a], function(x) { names(x)[which(x == min(x))] })
-    }
-    # II.B.2.bwt Two or more possible valid vegetation types (with warm temperate region)
-    if (!identical(grIIB2bwt, integer(0))) {
-      vegCls[grIIB2bwt] <- sapply(psblVegCls[grIIB2bwt], function(x) {
-        names(x[!is.element(x, StCls)])[which(x[!is.element(x, StCls)] == min(x[!is.element(x, StCls)]))]
-      })
-    }
-    # II.B.2.bst Two or more possible valid vegetation types (with subtropical region)
-    if (!identical(grIIB2bst, integer(0))) {
-      vegCls[grIIB2bst] <- sapply(psblVegCls[grIIB2bst], function(x) {
-        names(x[!is.element(x, WtCls)])[which(x[!is.element(x, WtCls)] == min(x[!is.element(x, WtCls)]))]
-      })
-    }
+  # I. Bare soil and no vegetation
+  vegCls[grI]       <- "BaSl"
 
-  }
+  # II.A Polar desert
+  vegCls[grIIA]     <- "PD"
+
+  # II.B.1 One possible valid vegetation type
+  vegCls[grIIB1]    <- apply(psblVegCls[grIIB1, , drop = FALSE], 1, function(x) names(which(x)))
+
+  # II.B.2.a Two or more possible valid vegetation types (without warm temperate and subtropical regions)
+  vegCls[grIIB2a]   <- apply(psblVegCls[grIIB2a, , drop = FALSE], 1, selVegCls)
+
+  # II.B.2.bwt Two or more possible valid vegetation types (with warm temperate region)
+  vegCls[grIIB2bwt] <- apply(psblVegCls[grIIB2bwt, -c(StCls), drop = FALSE], 1, selVegCls)
+
+  # II.B.2.bst Two or more possible valid vegetation types (with subtropical region)
+  vegCls[grIIB2bst] <- apply(psblVegCls[grIIB2bst, -c(WtCls), drop = FALSE], 1, selVegCls)
 
   # ~~~~ RETURN VALUES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
   if (verbose) {
-    rslt <- data.frame(do.call(cbind, mget(cv.bci)), vegCls = vegCls)
+    rslt <- data.frame(bioCliIdx, vegCls = vegCls)
   } else {
     rslt <- data.frame(vegCls = vegCls)
   }
@@ -301,7 +275,7 @@ cliHoldridgeGrid <- function(rs.temp, rs.prec, verbose = FALSE, filename = "", .
         assign(substring(cv.arg[i_arg], 4), getValues(get(cv.arg[i_arg]), row = bs$row[i], nrows = bs$nrows[i]))
       }
       df.rslt <- cliHoldridgePoints(temp, prec, verbose = verbose)
-      numCode <- hlzDefSubset$Numeric.code[match(df.rslt[["vegCls"]], rownames(hlzDefSubset))]
+      numCode <- hlzDefSubset$Numeric.code[match(df.rslt[["vegCls"]], hlzDefSubset$ID)]
       df.rslt[["vegCls"]] <- numCode
 
       rs.rslt <- writeValues(rs.rslt, as.matrix(df.rslt), bs$row[i])
@@ -316,7 +290,7 @@ cliHoldridgeGrid <- function(rs.temp, rs.prec, verbose = FALSE, filename = "", .
         assign(substring(cv.arg[i_arg], 4), getValues(get(cv.arg[i_arg]), row = bs$row[i], nrows = bs$nrows[i]))
       }
       df.rslt <- cliHoldridgePoints(temp, prec, verbose = verbose)
-      numCode <- hlzDefSubset$Numeric.code[match(df.rslt[["vegCls"]], rownames(hlzDefSubset))]
+      numCode <- hlzDefSubset$Numeric.code[match(df.rslt[["vegCls"]], hlzDefSubset$ID)]
       df.rslt[["vegCls"]] <- numCode
 
       cols <- bs$row[i] : (bs$row[i] + bs$nrows[i] - 1)

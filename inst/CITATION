@@ -3,18 +3,19 @@ citHeader("To cite package 'macroBiome' in publications use:")
 year <- sub("-.*", "", meta$Date)
 note <- sprintf("R package version %s", meta$Version)
 
-citEntry(
-  entry    = "manual",
+bibentry(
+  bibtype  = "manual",
   title    = "macroBiome: A Tool for Mapping the Distribution of the Biomes and Bioclimate",
   author   = person("Zolt\\'an", "Szelepcs\\'enyi", email = "szelepcsenyi.zoltan@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-9844-4958")),
   year     = year,
   note     = note,
+  doi      = "10.5281/zenodo.7633367",
   url      = "https://github.com/szelepcsenyi/macroBiome",
   textVersion = paste0(
     "Szelepcsényi Z (", year, ") ",
     "macroBiome: A Tool for Mapping the Distribution of the Biomes and Bioclimate. ",
     note,
-    ". https://github.com/szelepcsenyi/macroBiome"
+    ". https://doi.org/10.5281/zenodo.7633367"
   )
 )
 

@@ -86,9 +86,18 @@ to be computed. Valid values are as follows: \cr
 (f) \code{'gdd5'} - Growing Degree-Days on 5°C base (in °C day);  \cr
 (g) \code{'bdi'} - Budyko's Dryness Index (dimensionless); \cr
 (h) \code{'cci'} - Condrad's Continentality Index (in per cent);  \cr
-(i) \code{'tc'} - Mean Temperature of the Coldest Month (in °C); \cr
-(j) \code{'tw'} - Mean Temperature of the Warmest Month (in °C);  \cr
-(k) \code{'ptc'} - Priestley–Taylor Coefficient (dimensionless).}
+(i) \code{'mat'} - Mean Annual Temperature (in °C); \cr
+(j) \code{'tc'} - Mean Temperature of the Coldest Month (in °C); \cr
+(k) \code{'tw'} - Mean Temperature of the Warmest Month (in °C);  \cr
+(l) \code{'tm10'} - Number of Months with Mean Temperature above 10°C (dimensionless);  \cr
+(m) \code{'pdry'} - Precipitation Sum of the Driest Month (in mm); \cr
+(n) \code{'psdry'} - Precipitation Sum of the Driest Month in the Summer Half-Year (in mm); \cr
+(o) \code{'pwdry'} - Precipitation Sum of the Driest Month in the Winter Half-Year (in mm); \cr
+(p) \code{'pswet'} - Precipitation Sum of the Wettest Month in the Summer Half-Year (in mm); \cr
+(q) \code{'pwwet'} - Precipitation Sum of the Wettest Month in the Winter Half-Year (in mm); \cr
+(r) \code{'ps'} - Precipitation Sum of the Summer Half-Year (in mm); \cr
+(s) \code{'pw'} - Precipitation Sum of the Winter Half-Year (in mm); \cr
+(t) \code{'ptc'} - Priestley–Taylor Coefficient (dimensionless).}
 
 \item{filename}{output filename}
 

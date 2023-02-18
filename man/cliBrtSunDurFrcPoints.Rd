@@ -72,7 +72,7 @@ To estimate the monthly averages of relative sunlight duration, the approach pre
     to note that in this implementation, these factors are activated with the current configuration of continents
     and islands. Continents and regions are classified using the high-resolution world map of the
     \code{\link[rworldmap]{rworldmap-package}}. In checking whether or not a given geographic location can be
-    defined as an island, the high-resolution world map of the \code{\link[rnaturalearth]{rnaturalearth-package}}
+    defined as an island, the high-resolution world map of the \code{\link[rnaturalearth]{rnaturalearth}}
     is applied.
 }
 \note{

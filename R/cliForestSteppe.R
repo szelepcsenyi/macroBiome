@@ -64,10 +64,10 @@
 #'     The forestry climate classification developed by Führer et al. (2011) was reworked by Mátyás et al. (2018). In
 #'     the context of assessing the effects of future climate change, the 'forest-steppe' climate class was
 #'     introduced in the model. In the work of Mátyás et al. (2018), this type is characterized by the Forestry
-#'     Aridity Index (\code{'fai'}, dimensionless) values between 7.25 and 8. This definition is used here. \cr
+#'     Aridity Index (\code{fai}, dimensionless) values between 7.25 and 8. This definition is used here. \cr
 #'     The Siberian Vegetation Model (Monserud et al. 1993) defines numerous types of forest-steppe on the basis of
-#'     values of the Growing Degree-Days above 5°C (\code{'gdd5'}, in °C day), the Budyko's Dryness Index
-#'     (\code{'bdi'}, dimensionless), and the Condrad's Continentality Index (\code{'cci'}, in per cent). Here, all
+#'     values of the Growing Degree-Days above 5°C (\code{gdd5}, in °C day), the Budyko's Dryness Index
+#'     (\code{bdi}, dimensionless), and the Condrad's Continentality Index (\code{cci}, in per cent). Here, all
 #'     such ecotone types are aggregated into one class, in order to estimate the presence/absence of the
 #'     ‘forest-steppe’ ecotone.
 #'
@@ -134,7 +134,7 @@
 #' fsp
 #' })
 #'
-#' @importFrom stats setNames
+#' @importFrom stats complete.cases setNames
 #' @importFrom strex match_arg
 #'
 #' @export
@@ -185,7 +185,7 @@ cliForestSteppePoints <- function(temp, prec, bsdf = NULL, lat = NULL, elv = NUL
   intMtx <- bciRequirements
 
   # The eligibility of the vegetation classification schemes, elgVegCls (cls: mtx)
-  elgVegCls <- matrix(c(T, T, T, F), ncol = ncol(intMtx), dimnames = list(NULL, colnames(intMtx)))
+  elgVegCls <- matrix(c(T, T, T, F, F), ncol = ncol(intMtx), dimnames = list(NULL, colnames(intMtx)))
 
   # The availability of the vegetation classification schemes, avblVegCls (cls: mtx)
   avblVegCls <- colSums(intMtx) - (numMisIpVar[1, ] == 0) %*% as.matrix(intMtx) == 0
@@ -204,7 +204,7 @@ cliForestSteppePoints <- function(temp, prec, bsdf = NULL, lat = NULL, elv = NUL
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   bioCliIdx <- cliBioCliIdxPoints(temp, prec, bsdf = bsdf, lat = lat, elv = elv, year = year,
                                   aprchTEMP = aprchTEMP, aprchBSDF = aprchBSDF, dvTEMP = dvTEMP, bciOpVar = cv.bci)
-  list2env(setNames(split(bioCliIdx, col(bioCliIdx)), colnames(bioCliIdx)), envir = environment())
+  list2env(unclass(as.data.frame(bioCliIdx)), envir = environment())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # 02. Set the result object containing presence/absence data of 'forest-steppe'
@@ -217,28 +217,23 @@ cliForestSteppePoints <- function(temp, prec, bsdf = NULL, lat = NULL, elv = NUL
   # A. Transitional HLZ type
   if (any("hlz" %in% cv.svc)) {
     cv.bci <- rownames(intMtx)[rowSums(intMtx["hlz"]) != 0]
-    distBds <- array(NA, dim = c(nrow(fspChlzDefSubset), length(cv.bci), lgth),
-                     dimnames = list(rownames(fspChlzDefSubset), cv.bci, NULL))
-    for (i_bci in 1 : length(cv.bci)) {
-      bciLbl <- cv.bci[i_bci]
-      bci <- get(bciLbl)
-      for (i_vcl in 1 : nrow(fspChlzDefSubset)) {
-        optVal <- log2(fspChlzDefSubset[[bciLbl]][i_vcl]) + thrSft[[bciLbl]][i_vcl]
-        distBds[i_vcl, i_bci, ] <- ifelse(lapply(bci, function(x) {x == 0}), NA, (log2(bci) - optVal) ** 2.)
-      }
+    distBds <- matrix(nrow = lgth, ncol = nrow(fspChlzDefSubset), dimnames = list(NULL, rownames(fspChlzDefSubset)))
+    for (i_vcl in 1 : nrow(fspChlzDefSubset)) {
+      optVabt <- log2(fspChlzDefSubset$abt[i_vcl]) + 0.5
+      tmpVabt <- ifelse(abt == 0., NA, (log2(abt) - optVabt) ** 2.)
+      optVtap <- log2(fspChlzDefSubset$tap[i_vcl]) + 0.5
+      tmpVtap <- ifelse(tap == 0., NA, (log2(tap) - optVtap) ** 2.)
+      optVper <- log2(fspChlzDefSubset$per[i_vcl]) + 0.5
+      tmpVper <- ifelse(per == 0., NA, (log2(per) - optVper) ** 2.)
+      distBds[, i_vcl] <- sqrt(tmpVabt + tmpVtap + tmpVper)
     }
-    vld <- as.logical(apply(matrix(mapply(function(x) { !is.na(x) },
-                                          data.frame(abt = get("abt"), tap = get("tap"), per = get("per"))),
-                                   nrow = lgth), 1, prod))
-    psblVegCls <- rep(NA, length = lgth)
-    psblVegCls[vld] <- lapply(seq(1, lgth)[vld], function(i) { which.min(sqrt(rowSums(distBds[, , i]))) })
+    psblVegCls <- apply(distBds, 1, function(x) ifelse(any(is.na(x)), NA, names(which.min(x))))
     fsp_hlz <- ifelse(is.na(psblVegCls), NA, ifelse(grepl("Fs", psblVegCls), as.integer(1), as.integer(0)))
   }
 
   # B. Forestry climate class
   if (any("fai" %in% cv.svc)) {
-    fsp_fai <- ifelse(is.na(get("fai")), NA,
-                      ifelse(get("fai") >= 7.25 & get("fai") < 8.5, as.integer(1), as.integer(0)))
+    fsp_fai <- ifelse(is.na(fai), NA, ifelse(fai >= 7.25 & fai < 8.5, as.integer(1), as.integer(0)))
   }
 
   # C. Biome type in the Siberian Vegetation Model
@@ -255,9 +250,7 @@ cliForestSteppePoints <- function(temp, prec, bsdf = NULL, lat = NULL, elv = NUL
                                                                  as.integer(1), as.integer(0)))
       }
     }
-    vld <- as.logical(apply(matrix(mapply(function(x) { !is.na(x) },
-                                          data.frame(gdd5 = get("gdd5"), bdi = get("bdi"), cci = get("cci"))),
-                                   nrow = lgth), 1, prod))
+    vld <- complete.cases(list(gdd5, bdi, cci))
     presVal <- fsp_svm <- rep(NA, length = lgth)
     presVal[vld] <- sapply(seq(1, lgth)[vld], function(i) { as.numeric(which(apply(presBds[, , i], 1, prod) == 1)) })
     fsp_svm[vld] <- ifelse(is.na(presVal[vld]), NA,

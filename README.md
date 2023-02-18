@@ -1,10 +1,26 @@
+
 # macroBiome
 
-macroBiome is an R package that provides functions with both point and grid modes for simulating biomes by equilibrium vegetation models, with a special focus on paleoenvironmental applications.
+[![](https://zenodo.org/badge/575948999.svg)](https://zenodo.org/badge/latestdoi/575948999)
 
-Two widely used equilibrium biome models are currently implemented in the package: the Holdridge Life Zone (HLZ) system ([Holdridge 1947](https://doi.org/10.1126/science.105.2727.367)) and the BIOME model ([Prentice et al. 1992](https://doi.org/10.2307/2845499)). Three climatic forest-steppe models are also implemented.
+macroBiome is an R package that provides functions with both point and
+grid modes for simulating biomes by equilibrium vegetation models, with
+a special focus on paleoenvironmental applications.
 
-An approach for estimating monthly time series of relative sunshine duration from temperature and precipitation data ([Yin 1999](https://doi.org/10.1007/s007040050111)) is also adapted, allowing process-based biome models to be combined with high-resolution paleoclimate simulation datasets (e.g., [CHELSA-TraCE21k v1.0 dataset](https://chelsa-climate.org/chelsa-trace21k/)).
+Three widely used equilibrium biome models are currently implemented in
+the package: the Holdridge Life Zone (HLZ) system ([Holdridge
+1947](https://doi.org/10.1126/science.105.2727.367)), the Köppen-Geiger
+classification (KGC) system ([Köppen
+1936](http://koeppen-geiger.vu-wien.ac.at/pdf/Koppen_1936.pdf)) and the
+BIOME model ([Prentice et al. 1992](https://doi.org/10.2307/2845499)).
+Three climatic forest-steppe models are also implemented.
+
+An approach for estimating monthly time series of relative sunshine
+duration from temperature and precipitation data ([Yin
+1999](https://doi.org/10.1007/s007040050111)) is also adapted, allowing
+process-based biome models to be combined with high-resolution
+paleoclimate simulation datasets (e.g., [CHELSA-TraCE21k v1.0
+dataset](https://chelsa-climate.org/chelsa-trace21k/)).
 
 ## Installation
 
@@ -23,7 +39,10 @@ devtools::install_github("szelepcsenyi/macroBiome")
 
 ## Example
 
-Create a biome map of the Eastern Mediterranean--Black Sea--Caspian-Corridor region for the period 1991-2020 using the CRU TS v.4.05 dataset [(Harris et al. 2020)](https://doi.org/10.1038/s41597-020-0453-3)
+Create a biome map of the Eastern Mediterranean–Black
+Sea–Caspian-Corridor region for the period 1991-2020 using the CRU TS
+v.4.05 dataset [(Harris et
+al. 2020)](https://doi.org/10.1038/s41597-020-0453-3)
 
 ``` r
 list.of.packages <- c("R.utils", "rasterVis", "latticeExtra", "rworldmap")
@@ -111,7 +130,7 @@ plt <- plt + latticeExtra::layer(sp.lines(rworldmap::getMap(resolution = 'low'),
 print(plt)
 ```
 
-![](man/figures/README-example-1.png)
+![](man/figures/README-example-1.png)<!-- -->
 
 ## Citation
 
@@ -119,8 +138,11 @@ print(plt)
 citation("macroBiome")
 ```
 
-To cite package 'macroBiome' in publications use:
+To cite package ‘macroBiome’ in publications use:
 
-> Szelepcsényi Z (2022) macroBiome: A Tool for Mapping the Distribution of the Biomes and Bioclimate. R package version 0.1.0. <https://github.com/szelepcsenyi/macroBiome>
+> Szelepcsényi Z (2023) macroBiome: A Tool for Mapping the Distribution
+> of the Biomes and Bioclimate. R package version 0.2.0.
+> <https://doi.org/10.5281/zenodo.7633367>
 
-I have invested a considerable amount of time and effort in creating the package 'macroBiome'. Please cite it if you use it.
+I have invested a considerable amount of time and effort in creating the
+package ‘macroBiome’. Please cite it if you use it.

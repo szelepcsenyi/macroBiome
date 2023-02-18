@@ -62,7 +62,7 @@
 #'     }
 #'
 #'     For details about calculating bioclimatic indices, see the function
-#'     \code{\link[macroBiome]{cliBioCliIdxPoints}}. The Priestley–Taylor coefficient (\code{'ptc'}, dimensionless)
+#'     \code{\link[macroBiome]{cliBioCliIdxPoints}}. The Priestley–Taylor coefficient (\code{ptc}, dimensionless)
 #'     is exceptional because its computation requires a simulation of evapotranspiration at daily time step via the
 #'     implementation of the SPLASH algorithm (Davis et al. 2017) (see
 #'     \code{\link[macroBiome]{dlyEngWtrFluxPoints}}). The application of the SPLASH algorithm requires, among other
@@ -173,7 +173,7 @@ cliBIOMEPoints <- function(temp, prec, bsdf, lat, elv, year = 2000, MSMC = 150.,
   bioCliIdx <- cliBioCliIdxPoints(temp, prec, bsdf = bsdf, lat = lat, elv = elv, year = year, MSMC = MSMC,
                                   aprchTEMP = aprchTEMP, aprchPREC = aprchPREC, aprchBSDF = aprchBSDF,
                                   dvTEMP = dvTEMP, dvPREC = dvPREC, bciOpVar = cv.bci, argCkd = T)
-  list2env(setNames(split(bioCliIdx, col(bioCliIdx)), colnames(bioCliIdx)), envir = environment())
+  list2env(unclass(as.data.frame(bioCliIdx)), envir = environment())
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # 02. Set the result object containing vegetation class
@@ -202,14 +202,14 @@ cliBIOMEPoints <- function(temp, prec, bsdf, lat, elv, year = 2000, MSMC = 150.,
   }
 
   for (i_vcl in 1 : nrow(bioBiomeDefinitions)) {
-    psblPFTComp <- as.numeric(subset(bioBiomeDefinitions, select = -c(Vegetation.class, Numeric.code))[i_vcl, ])
+    psblPFTComp <- as.numeric(subset(bioBiomeDefinitions, select = -c(1, 2))[i_vcl, ])
     slctd <- which(apply(presVal, 2, function(x, want) identical(as.numeric(x), want), psblPFTComp))
     vegCls[slctd] <- rownames(bioBiomeDefinitions)[i_vcl]
   }
 
   # ~~~~ RETURN VALUES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
   if (verbose) {
-    rslt <- data.frame(do.call(cbind, mget(cv.bci)), vegCls = vegCls)
+    rslt <- data.frame(bioCliIdx, vegCls = vegCls)
   } else {
     rslt <- data.frame(vegCls = vegCls)
   }

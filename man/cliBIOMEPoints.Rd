@@ -103,7 +103,7 @@ To classify vegetation, the BIOME model developed by Prentice et al. (1992) uses
     }
 
     For details about calculating bioclimatic indices, see the function
-    \code{\link[macroBiome]{cliBioCliIdxPoints}}. The Priestley–Taylor coefficient (\code{'ptc'}, dimensionless)
+    \code{\link[macroBiome]{cliBioCliIdxPoints}}. The Priestley–Taylor coefficient (\code{ptc}, dimensionless)
     is exceptional because its computation requires a simulation of evapotranspiration at daily time step via the
     implementation of the SPLASH algorithm (Davis et al. 2017) (see
     \code{\link[macroBiome]{dlyEngWtrFluxPoints}}). The application of the SPLASH algorithm requires, among other

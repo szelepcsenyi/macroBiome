@@ -11,7 +11,7 @@ A Tool for Mapping the Distribution of the Biomes and Bioclimate
 \description{
 Procedures for simulating biomes by equilibrium vegetation models, with a special focus on paleoenvironmental applications.
 
-Two widely used equilibrium biome models are currently implemented in the package: the Holdridge Life Zone (HLZ) system (Holdridge 1947, 1967) and the BIOME model (Prentice et al. 1992). Three climatic forest-steppe models are also implemented.
+Three widely used equilibrium biome models are currently implemented in the package: the Holdridge Life Zone (HLZ) system (Holdridge 1947, 1967), the Köppen-Geiger classification (KGC) system (Köppen 1936) and the BIOME model (Prentice et al. 1992). Three climatic forest-steppe models are also implemented.
 
 In the BIOME model, the water balance module used to calculate daily radiation, evapotranspiration and soil moisture was replaced by the SPLASH v.1.0 model (Davis et al. 2017). The methodology used in this model was modified in two aspects: the 'bucket size' was made freely adjustable, and variations of the Earth's orbital parameters were taken into account by implementing the procedure proposed by Berger and Loutre (1991).
 
@@ -36,6 +36,8 @@ The use of 'Grid' functions allows to generate distribution maps of biomes (and 
     105(2727):367–368. \doi{ 10.1126/science.105.2727.367}}
 
 \cite{Holdridge LR (1967) Life zone ecology. Tropical Science Center, San Jose, Costa Rica}
+
+\cite{Köppen W (1936) Das geographische System der Klimate. In: Köppen W, Geiger R (eds) Handbuch der Klimatologie.        Verlag von Gebrüder Borntraeger, Berlin, Germany, pp 1–44}
 
 \cite{Prentice IC, Cramer W, Harrison SP, Leemans R, Monserud RA, Solomon AM (1992) A Global Biome Model Based on
     Plant Physiology and Dominance, Soil Properties and Climate. J Biogeogr 19(2):117–134. \doi{10.2307/2845499}}

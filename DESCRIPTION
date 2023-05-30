@@ -1,7 +1,7 @@
 Package: macroBiome
 Type: Package
 Title: A Tool for Mapping the Distribution of the Biomes and Bioclimate
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     c(person("Zoltán", "Szelepcsényi", email = "szelepcsenyi.zoltan@gmail.com", 
              role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-9844-4958")))
@@ -12,7 +12,7 @@ Description: Procedures for simulating biomes by equilibrium vegetation
   the package: the Holdridge Life Zone (HLZ) system (Holdridge 1947, 
   <doi:10.1126/science.105.2727.367>), the Köppen-Geiger classification 
   (KGC) system (Köppen 1936, 
-  <http://koeppen-geiger.vu-wien.ac.at/pdf/Koppen_1936.pdf>) and the 
+  <https://koeppen-geiger.vu-wien.ac.at/pdf/Koppen_1936.pdf>) and the 
   BIOME model (Prentice et al. 1992, <doi:10.2307/2845499>). Three 
   climatic forest-steppe models are also implemented.
   An approach for estimating monthly time series of relative sunshine 
@@ -26,7 +26,6 @@ Depends:
     palinsol,
     raster
 Imports:
-    rworldmap,
     rworldxtra,
     sp,
     strex
@@ -36,4 +35,4 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 7.2.3
-Date: 2023-02-12
+Date: 2023-05-29

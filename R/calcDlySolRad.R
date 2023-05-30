@@ -201,8 +201,6 @@ calcDlySolRad <- function(year, n, lat, elv = NULL, S_f = NULL, T_a = NULL, argC
 }
 
 
-.BER90 <- new.env()
-
 # ********************************************************************************************************************
 # Name:     calcOrbPos
 # Inputs:   - double, year (using astronomical year numbering) (year)
@@ -250,7 +248,7 @@ calcOrbPos <- function(year, n, argCkd = FALSE) {
   # 02. Calculate orbital parameters (at a paleoclimatic scale)
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # ref: Berger and Loutre (1991)
-  orbParam <- do.call(rbind, lapply(year - 1950, pi.ber90, degree = TRUE))
+  orbParam <- do.call(rbind, lapply(year - 1950, ber90, degree = TRUE))
   e_pc <- as.numeric(orbParam[, "ecc"])
   eps_pc <- as.numeric(orbParam[, "eps"])
   w_ome_pc <- as.numeric(orbParam[, "varpi"])

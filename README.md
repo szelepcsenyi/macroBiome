@@ -11,7 +11,7 @@ Three widely used equilibrium biome models are currently implemented in
 the package: the Holdridge Life Zone (HLZ) system ([Holdridge
 1947](https://doi.org/10.1126/science.105.2727.367)), the Köppen-Geiger
 classification (KGC) system ([Köppen
-1936](http://koeppen-geiger.vu-wien.ac.at/pdf/Koppen_1936.pdf)) and the
+1936](https://koeppen-geiger.vu-wien.ac.at/pdf/Koppen_1936.pdf)) and the
 BIOME model ([Prentice et al. 1992](https://doi.org/10.2307/2845499)).
 Three climatic forest-steppe models are also implemented.
 
@@ -41,11 +41,11 @@ devtools::install_github("szelepcsenyi/macroBiome")
 
 Create a biome map of the Eastern Mediterranean–Black
 Sea–Caspian-Corridor region for the period 1991-2020 using the CRU TS
-v.4.05 dataset [(Harris et
-al. 2020)](https://doi.org/10.1038/s41597-020-0453-3)
+v.4.05 dataset ([Harris et
+al. 2020](https://doi.org/10.1038/s41597-020-0453-3))
 
 ``` r
-list.of.packages <- c("R.utils", "rasterVis", "latticeExtra", "rworldmap")
+list.of.packages <- c("R.utils", "rasterVis", "latticeExtra", "rnaturalearth")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if (length(new.packages)) { install.packages(new.packages) }
 
@@ -125,7 +125,7 @@ main <- "Eastern Mediterranean–Black Sea–Caspian-Corridor region"
 plt <- levelplot(biome, main = main, col.regions = bioColours$Col[slctd],
                  colorkey = list(space = "bottom", height = 1.1), pretty = T,
                  par.settings = list(layout.widths = list(axis.key.padding = 4)))
-plt <- plt + latticeExtra::layer(sp.lines(rworldmap::getMap(resolution = 'low'),
+plt <- plt + latticeExtra::layer(sp.lines(rnaturalearth::countries110,
                                           col = "gray30", lwd = 2.0))
 print(plt)
 ```
@@ -141,7 +141,7 @@ citation("macroBiome")
 To cite package ‘macroBiome’ in publications use:
 
 > Szelepcsényi Z (2023) macroBiome: A Tool for Mapping the Distribution
-> of the Biomes and Bioclimate. R package version 0.2.0.
+> of the Biomes and Bioclimate. R package version 0.3.0.
 > <https://doi.org/10.5281/zenodo.7633367>
 
 I have invested a considerable amount of time and effort in creating the

@@ -71,7 +71,7 @@ To estimate the monthly averages of relative sunlight duration, the approach pre
     (1999)). Each regional factor is activated as a function of latitude and longitude. However, it is important
     to note that in this implementation, these factors are activated with the current configuration of continents
     and islands. Continents and regions are classified using the high-resolution world map of the
-    \code{\link[rworldmap]{rworldmap-package}}. In checking whether or not a given geographic location can be
+    \code{\link[rworldxtra]{rworldxtra-package}}. In checking whether or not a given geographic location can be
     defined as an island, the high-resolution world map of the \code{\link[rnaturalearth]{rnaturalearth}}
     is applied.
 }

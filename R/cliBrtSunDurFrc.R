@@ -45,7 +45,7 @@
 #'     (1999)). Each regional factor is activated as a function of latitude and longitude. However, it is important
 #'     to note that in this implementation, these factors are activated with the current configuration of continents
 #'     and islands. Continents and regions are classified using the high-resolution world map of the
-#'     \code{\link[rworldmap]{rworldmap-package}}. In checking whether or not a given geographic location can be
+#'     \code{\link[rworldxtra]{rworldxtra-package}}. In checking whether or not a given geographic location can be
 #'     defined as an island, the high-resolution world map of the \code{\link[rnaturalearth]{rnaturalearth}}
 #'     is applied.
 #'
@@ -133,10 +133,10 @@
 #' })
 #' }
 #'
-#' @importFrom rworldmap getMap
 #' @importFrom sp CRS over proj4string SpatialPoints
 #' @importFrom stats complete.cases setNames
 #' @importFrom strex match_arg
+#' @importFrom utils data
 #' @import rworldxtra
 #'
 #' @export
@@ -230,7 +230,8 @@ cliBrtSunDurFrcPoints <- function(temp, prec, lat, lon, elv, year = 2000, aprchS
   f_i <- array(dim = c(lgth, 6, n_moy), dimnames = list(NULL, c("IA", "NA", "SA", "EA", "MA", "AF"), month.abb))
 
   # Regional data of the point to consider regional idiosyncrasies
-  countriesSP <- getMap(resolution = 'high')
+  data("countriesHigh", envir = environment(), package = "rworldxtra")
+  countriesSP <- get("countriesHigh", envir = environment(), inherits = FALSE)
   vldPoints <- data.frame("lon" = lon[vld], "lat" = lat[vld])
   cntryCls <- over(SpatialPoints(vldPoints, proj4string = CRS(proj4string(countriesSP))), countriesSP)
   islCls <- over(SpatialPoints(vldPoints, proj4string = CRS(proj4string(islandsSP))), islandsSP)

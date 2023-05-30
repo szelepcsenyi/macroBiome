@@ -1,3 +1,12 @@
+# macroBiome 0.3.0
+
+Released 2023-05-29
+
+## Fixed
+
+- fixed some bugs to comply with changes in package dependencies
+
+
 # macroBiome 0.2.0
 
 Released 2023-02-12

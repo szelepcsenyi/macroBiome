@@ -1,9 +1,5 @@
 ## Load raw data from .csv file
 
-# A corrected version of the function 'palinsol::ber90'
-pi.ber90 <- palinsol::ber90
-body(pi.ber90)[[2]][[3]][[3]] <- substitute(data("BER90", package = "palinsol", envir = .BER90))
-
 # Auxiliary dataframe for checking and correcting objects containing input variables
 varFeatures <- read.csv2("data-raw/functions/varFeatures.csv", header = TRUE, row.names = 1,
                          sep = ";", quote = "\"", dec = ".", fill = TRUE, comment.char = "")
@@ -104,8 +100,8 @@ scale <- 10
 type <- "geography_regions_polys"
 category <- "physical"
 file_name <-  paste0('ne_', scale, 'm_', type)
-address <- paste0("https://www.naturalearthdata.com/http//",
-                  "www.naturalearthdata.com/download/", scale, "m/", category,"/", file_name, ".zip")
+address <- paste0("https://naturalearth.s3.amazonaws.com/",
+                  scale, "m_", category,"/", file_name, ".zip")
 utils::download.file(file.path(address), zip_file <- tempfile())
 utils::unzip(zip_file, exdir =  tempdir())
 landsSP <- rgdal::readOGR(tempdir(), file_name, encoding = 'UTF-8', stringsAsFactors = FALSE, use_iconv = TRUE)
@@ -153,7 +149,7 @@ inp_exClnrGrid <- lapply(inp_exClnrGrid, raster::rasterFromXYZ, crs = "+proj=lon
 
 ## Save the data in the required R package location
 
-usethis::use_data(pi.ber90, varFeatures, c, opVarChoices, ipVarRequirements, hlzDefSubset, bioPFTDefinitions,
+usethis::use_data(varFeatures, c, opVarChoices, ipVarRequirements, hlzDefSubset, bioPFTDefinitions,
                   bioBiomeDefinitions, fspChlzDefSubset, thrSft, svmDefinitions, bciRequirements, vegCkgcTypes,
                   islandsSP, internal = TRUE, overwrite = TRUE)
 
